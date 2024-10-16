@@ -1,14 +1,20 @@
+'use server'
+
 import RightSidebar from '@/components/RightSidebar'
 import HeaderBox from '@/components/ui/HeaderBox'
 import TotalBalanceBox from '@/components/ui/TotalBalanceBox'
+import { getLoggedInUser } from '@/lib/actions/user.actions'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
-const Home = () => {
-  const loggedIn = {
-    firstName: "Temitope",
-    lastName: "Adesiyan",
-    email: "adesiyantope2014@gmail.com"
-  }
+const Home = async () => {
+  
+  const loggedIn = await getLoggedInUser();
+  console.log(loggedIn);
+  
+
+  if (!loggedIn) redirect("/sign-in")
+
   return (
     <section className='home'>
       <div className="home-content">
@@ -16,7 +22,7 @@ const Home = () => {
           <HeaderBox 
             type="greeting"
             title = "Welcome"
-            user= { loggedIn? loggedIn?.firstName : "Guest"}
+            user= { loggedIn? loggedIn?.name : "Guest"}
             subtext = "Access and manage your account and transactions efficiently"
           />
           <TotalBalanceBox

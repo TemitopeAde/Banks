@@ -1,8 +1,11 @@
-import React from 'react'
+'use server'
 
-const SignUp = () => {
+import Register from "@/components/ui/Register"
+
+const SignUp = async () => {
+
   return (
-    <div>SignUp</div>
+    <Register />
   )
 }
 

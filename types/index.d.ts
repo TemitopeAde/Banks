@@ -17,13 +17,19 @@ declare type SignUpParams = {
   dateOfBirth: string;
   ssn: string;
   email: string;
-  password: string;
+  password: string; 
 };
 
 declare type LoginUser = {
   email: string;
   password: string;
 };
+
+// declare interface PlaidLinkProps {
+//   user: User;
+//   variant?: "primary" | "ghost";
+//   dwollaCustomerId?: string;
+// }
 
 declare type User = {
   $id: string;
@@ -32,6 +38,7 @@ declare type User = {
   dwollaCustomerUrl: string;
   dwollaCustomerId: string;
   firstName: string;
+  name: string,
   lastName: string;
   address1: string;
   city: string;
@@ -210,6 +217,7 @@ declare interface TotlaBalanceBoxProps {
 
 declare interface FooterProps {
   user: User;
+  type: 'mobile' | 'desktop'
 }
 
 declare interface RightSidebarProps {

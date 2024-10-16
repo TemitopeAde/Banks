@@ -2,7 +2,7 @@
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
-
+import { z } from 'zod'
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -193,3 +193,33 @@ export const getTransactionStatus = (date: Date) => {
 
   return date > twoDaysAgo ? "Processing" : "Success";
 };
+
+
+
+export const signInSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
+
+
+export const signUpSchema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(8, "Password must be at least 8 characters long"),
+
+    confirmPassword: z.string().min(8, "Confirm Password must be at least 8 characters long"),
+
+    firstName: z.string().min(2, "First name must be at least 2 characters"),
+    lastName: z.string().min(2, "Last name must be at least 2 characters"),
+    state: z.string().nonempty("State is required"),
+    postalCode: z.string().min(5, "Postal code must be at least 5 characters"),
+    dateOfBirth: z.string().nonempty("Date of birth is required"),
+    ssn: z.string().min(6, "SSN must be at least 6 characters"),
+    city: z.string().nonempty("City is required"),
+    address1: z.string().nonempty("address1 is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"], // Path to the field that should show the error
+  });
+
